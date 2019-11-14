@@ -147,7 +147,17 @@ class Instructor extends Lambdasian{
   grade(student, subject){
     return `${student.name} receives perfect score on ${subject}`;
   }
+  // STRETCH GOAL
+  randomGrade(student){
+    const max = 10;
+    const min = -10;
+    student.grade += Math.ceil(Math.random() * (max - min) + min);
+    if (student.grade < 1 ) student.grade = 1;
+    if (student.grade > 100 ) student.grade = 100;
+  }
+  // STRETCH GOAL
 }
+
 
 /*
   TASK 5
@@ -170,6 +180,9 @@ class Student extends Lambdasian{
     this.previousBackground = obj.previousBackground;
     this.className = obj.className;
     this.favSubjects = obj.favSubjects;
+    // STRETCH
+    this.grade = 50;
+    // STRETCH
   }
   listSubjects(){
     return `Loving ${this.favSubjects}`;
@@ -180,6 +193,13 @@ class Student extends Lambdasian{
   sprintChallenge(subject){
     return `${this.name} has begun sprint challenge on ${subject}`;
   }
+  // STRETCH GOAL
+  graduate(){
+    if (this.grade > 70 ) {
+      return `Let them graduate!`;
+    } else return  `Go back studying!`;
+  }
+  // STRETCH GOAL
 }
 
 /*
@@ -195,14 +215,24 @@ class Student extends Lambdasian{
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
-
+class ProjectManager extends Instructor{
+  constructor(obj){
+    super(obj);
+    this.gradClassName = obj.gradClassName;
+    this.favInstructor = obj.favInstructor;
+  }
+  standUp(channel){
+    return `${this.name} announces to ${channel}, @channel standy time`;
+  }
+  debugsCode(studentObj, subject){
+    return  `${studentObj.name} debugs ${this.name}'s code on ${subject}`;
+  }
 }
 
 /*
   STRETCH PROBLEM (no tests!)
     - Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
-    - Now that our students have a grade build out a method on the Instructor (this will be used by _BOTH_ instructors and PM's) that will randomly add or subtract points to a student's grade. _Math.random_ will help.
+    - Now that our students have a grade, build out a method on the Instructor (this will be used by _BOTH_ instructors and PM's) that will randomly add or subtract points to a student's grade. _Math.random_ will help.
     - Add a graduate method to a student.
       + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
       + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
